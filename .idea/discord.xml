@@ -2,6 +2,6 @@
 <project version="4">
   <component name="DiscordProjectSettings">
     <option name="show" value="PROJECT" />
-    <option name="description" value="" />
+    <option name="description" value="Client for tcp chat" />
   </component>
 </project>
