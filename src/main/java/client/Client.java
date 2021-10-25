@@ -8,10 +8,13 @@ import protocol.MessageWithFile;
 import java.io.IOException;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Scanner;
 
-import static phrases.Phrases.ENTER_NAME;
-import static phrases.Phrases.WELCOME;
+import static phrases.Phrases.*;
 
 public class Client {
     private final String address;
@@ -24,7 +27,7 @@ public class Client {
     public Client(String address, int port) {
         this.address = address;
         this.port = port;
-        this.scanner = new Scanner(System.in);
+        this.scanner = new Scanner(System.in, "UTF-8");
     }
 
     public void start() {
@@ -46,7 +49,8 @@ public class Client {
                     if (messageNameVerified.getMessage().getText().contains(WELCOME.getPhrase())) {
                         nameVerified = true;
                     }
-                    String messageToConsole =   "<" + messageNameVerified.getMessage().getTime() + "> " +
+                    String time = getCurrentTime(messageNameVerified.getMessage().getTime());
+                    String messageToConsole =   "<" + time + "> " +
                                                 "[" + messageNameVerified.getMessage().getName() + "] " +
                                                 messageNameVerified.getMessage().getText();
                     System.out.println(messageToConsole);
@@ -62,16 +66,17 @@ public class Client {
             ReceiverThread receiverThread = new ReceiverThread(socket);
             receiverThread.start();
 
-            boolean interrupted = clientThread.isInterrupted();
-            while (!interrupted) {
+            while (!socket.isClosed()) {
                 MessageWithFile message = readMessage();
                 if (message != null) {
                     receiverThread.offer(message);
                 }
-
-                interrupted = clientThread.isInterrupted();
             }
 
+            scanner.close();
+            writer.close();
+            reader.close();
+            clientThread.interrupt();
             receiverThread.interrupt();
         } catch (IOException e) {
             e.printStackTrace();
@@ -82,8 +87,7 @@ public class Client {
         System.out.print(ENTER_NAME.getPhrase());
         String nickname = scanner.nextLine();
         MessageWithFile loginMessage = new MessageWithFile(
-                new Message(null,null, nickname,null,null),
-                null);
+                new Message(null, null, nickname, null, null), null);
         writer.write(loginMessage);
     }
 
@@ -92,5 +96,16 @@ public class Client {
             return reader.read();
         }
         return null;
+    }
+
+    public static String getCurrentTime(String time) {
+        ZonedDateTime zonedDateTime = ZonedDateTime.parse(time, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ"));
+        ZonedDateTime currentZonedDateTime = zonedDateTime.withZoneSameInstant(ZoneId.systemDefault());
+        if (currentZonedDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                .equals(new SimpleDateFormat("yyyy-MM-dd").format(new Date()))) {
+            return currentZonedDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        } else {
+            return currentZonedDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        }
     }
 }
