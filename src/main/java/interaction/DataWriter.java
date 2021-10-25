@@ -18,7 +18,7 @@ public class DataWriter {
         Message message = messageWithFile.getMessage();
         try {
             writeMessageInStream(message);
-            if (message.getFile() != null && message.getFileSize() != null) {
+            if (message.getFileName() != null && message.getFileSize() != null) {
                writeFileInStream(messageWithFile.getFile());
             }
             outputStream.flush();

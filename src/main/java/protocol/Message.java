@@ -11,14 +11,14 @@ public class Message implements Serializable {
     private String time;
     private String name;
     private String text;
-    private String file;
+    private String fileName;
     private Integer fileSize;
 
-    public Message(String time, String name, String text, String file, Integer fileSize) {
+    public Message(String time, String name, String text, String fileName, Integer fileSize) {
         this.time = time;
         this.name = name;
         this.text = text;
-        this.file = file;
+        this.fileName = fileName;
         this.fileSize = fileSize;
     }
 
@@ -53,13 +53,13 @@ public class Message implements Serializable {
         this.text = text;
     }
 
-    public String getFile() {
-        return file;
+    public String getFileName() {
+        return fileName;
     }
 
     @JsonSetter("file")
-    public void setFile(String file) {
-        this.file = file;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public Integer getFileSize() {
@@ -77,7 +77,7 @@ public class Message implements Serializable {
                 "time='" + time + '\'' +
                 ", name='" + name + '\'' +
                 ", text='" + text + '\'' +
-                ", file='" + file + '\'' +
+                ", file='" + fileName + '\'' +
                 ", fileSize=" + fileSize +
                 '}';
     }
@@ -89,12 +89,12 @@ public class Message implements Serializable {
         Message message = (Message) o;
         return fileSize.equals(message.fileSize) && Objects.equals(time, message.time) &&
                 Objects.equals(name, message.name) && Objects.equals(text, message.text) &&
-                Objects.equals(file, message.file);
+                Objects.equals(fileName, message.fileName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(time, name, text, file, fileSize);
+        return Objects.hash(time, name, text, fileName, fileSize);
     }
 
     public byte[] toBytes() {

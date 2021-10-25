@@ -17,7 +17,7 @@ public class DataReader {
     public MessageWithFile read() {
         Message message = readMessageFromStream();
         byte[] file = null;
-        if (message.getFile() != null && message.getFileSize() != null) {
+        if (message.getFileName() != null && message.getFileSize() != null) {
             file = readFileFromStream(message.getFileSize());
         }
         return new MessageWithFile(message,file);

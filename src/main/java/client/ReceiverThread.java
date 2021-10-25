@@ -42,7 +42,7 @@ public class ReceiverThread extends Thread {
                         "[" + message.getMessage().getName() + "] " +
                         message.getMessage().getText();
         if (message.getFile() != null) {
-            writeFile(message.getMessage().getName(), message.getMessage().getFile(), message.getFile());
+            writeFile(message.getMessage().getName(), message.getMessage().getFileName(), message.getFile());
         }
         System.out.println(text);
         if (message.getMessage().getText().equals(Phrases.SERVER_CLOSED.getPhrase())) {
