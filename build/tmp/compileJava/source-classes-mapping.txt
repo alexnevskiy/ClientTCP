@@ -1,18 +1,18 @@
-interaction/DataWriter.java
- interaction.DataWriter
-protocol/Message.java
- protocol.Message
 protocol/MessageWithFile.java
  protocol.MessageWithFile
-interaction/DataReader.java
- interaction.DataReader
-Main.java
- Main
-client/ClientThread.java
- client.ClientThread
-phrases/Phrases.java
- phrases.Phrases
-client/Client.java
- client.Client
 client/ReceiverThread.java
  client.ReceiverThread
+Main.java
+ Main
+protocol/Message.java
+ protocol.Message
+phrases/Phrases.java
+ phrases.Phrases
+client/ClientThread.java
+ client.ClientThread
+interaction/DataWriter.java
+ interaction.DataWriter
+interaction/DataReader.java
+ interaction.DataReader
+client/Client.java
+ client.Client
