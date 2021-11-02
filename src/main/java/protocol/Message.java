@@ -1,6 +1,5 @@
 package protocol;
 
-import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -30,7 +29,6 @@ public class Message implements Serializable {
         return time;
     }
 
-    @JsonSetter("time")
     public void setTime(String time) {
         this.time = time;
     }
@@ -39,7 +37,6 @@ public class Message implements Serializable {
         return name;
     }
 
-    @JsonSetter("name")
     public void setName(String name) {
         this.name = name;
     }
@@ -48,7 +45,6 @@ public class Message implements Serializable {
         return text;
     }
 
-    @JsonSetter("text")
     public void setText(String text) {
         this.text = text;
     }
@@ -57,7 +53,6 @@ public class Message implements Serializable {
         return fileName;
     }
 
-    @JsonSetter("file")
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
@@ -66,7 +61,6 @@ public class Message implements Serializable {
         return fileSize;
     }
 
-    @JsonSetter("fileSize")
     public void setFileSize(int fileSize) {
         this.fileSize = fileSize;
     }
